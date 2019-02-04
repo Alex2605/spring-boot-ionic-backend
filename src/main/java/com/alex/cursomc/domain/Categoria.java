@@ -13,7 +13,6 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Categoria implements Serializable{
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
