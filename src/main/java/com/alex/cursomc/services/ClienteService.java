@@ -51,7 +51,7 @@ public class ClienteService {
 		return obj;
 	}
 
-	
+
 	public Cliente update(Cliente obj) {
 		Cliente newObj = find(obj.getId());
 		updateData (newObj, obj);
@@ -64,7 +64,7 @@ public class ClienteService {
 			repo.delete(id);
 		}
 		catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir porque há entidades relacionadas.");
+			throw new DataIntegrityException("Não é possível excluir porque há pedidos relacionadas.");
 		}
 		
 	}
@@ -81,22 +81,22 @@ public class ClienteService {
 	public Cliente fromDTO(ClienteDTO objDtO) {
 		return new Cliente(objDtO.getId(), objDtO.getNome(), objDtO.getEmail(), null, null);
 	}
-	
-	public Cliente fromDTO(ClienteNewDTO objDtO) {
-		Cliente cli = new Cliente(null, objDtO.getNome(), objDtO.getEmail(), objDtO.getCpfOuCnpj(),TipoCliente.toEnum(objDtO.getTipo()));
-		Cidade cid = cidadeRepository.findOne(objDtO.getCidadeId());
-		Endereco end = new Endereco(null, objDtO.getLogradouro(), objDtO.getNumero(), objDtO.getComplemento(), objDtO.getBairro(), objDtO.getCep(), cli, cid);
+	public Cliente fromDTO(ClienteNewDTO objDto) {
+		Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()));
+		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
+		Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, cid);
 		cli.getEnderecos().add(end);
-		cli.getTelefones().add(objDtO.getTelefone1());
-		if (objDtO.getTelefone2() != null){
-			cli.getTelefones().add(objDtO.getTelefone2());
+		cli.getTelefones().add(objDto.getTelefone1());
+		if (objDto.getTelefone2()!=null) {
+			cli.getTelefones().add(objDto.getTelefone2());
 		}
-		if (objDtO.getTelefone3() != null){
-			cli.getTelefones().add(objDtO.getTelefone3());
+		if (objDto.getTelefone3()!=null) {
+			cli.getTelefones().add(objDto.getTelefone3());
 		}
 		return cli;
-
 	}
+
+
 	
 	private void updateData(Cliente newObj, Cliente obj) {
 		newObj.setNome(obj.getNome());
