@@ -25,7 +25,7 @@ public class ClienteDTO implements Serializable{
 	
 	public ClienteDTO() {
 	}
-	
+	/*****CLIENTE DTO******/
 	public ClienteDTO(Cliente obj) {
 		id = obj.getId();
 		nome = obj.getNome();
